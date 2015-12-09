@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import static java.lang.Math.*;
 
 public class L4 {
-
 	static double s = 1.0 / 4;
 	static double L = 1;
 

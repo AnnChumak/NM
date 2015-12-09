@@ -97,13 +97,13 @@ public class L1 {
 			for (int i = 0; i < a.length; i++) {
 				for (int j = 0; j < a.length; j++) {
 					if (i == j) {
-						d += a[i][j];
+						d += Math.pow(a[i][j], 2);
 					} else {
-						w += a[i][j];
+						w += Math.pow(a[i][j], 2);
 					}
 				}
 			}
-			out.printf("D = %5.5f, W = %5.5f, Sum = %5.5f", d, w, d + w);
+			out.printf("Diagonal = %5.5f, NonDiagonal = %5.5f, Sum = %5.5f", d, w, d + w);
 			out.printf("%n%n");
 
 			// Перезаписываем матрицу для следующей итерации
@@ -168,6 +168,14 @@ public class L1 {
 	}
 
 	static double[] error(double[][] a, double[][] h, int k) {
+		double[][] h_res = new double[a.length][a.length];
+		for (int i = 0; i < h.length; i++) {
+			for (int j = 0; j < h[0].length; j++) {
+				h_res[i][j] = h[j][i];
+			}
+		}
+		h = h_res;
+
 		double[] result = new double[a.length];
 		double[] v = new double[a.length];
 		for (int i = 0; i < h.length; i++) {
