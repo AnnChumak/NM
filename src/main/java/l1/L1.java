@@ -9,12 +9,18 @@ import static java.lang.Math.abs;
 
 public class L1 {
 	public static final double EPS = 1e-5;
-	private static File log = new File("log_l1.txt");
-	private static double[][] a = {{6.48, 1.1, 0.97, 1.21},
-			{1.1, 3.94, 1.3, 0.16},
-			{0.97, 1.3, 5.66, 2.1},
+	private static File log = new File("log1.txt");
+
+	private static double[][] a = {{6.48, 1.04, 1.03, 1.21},
+			{1.04, 3.5, 1.3, 0.16},
+			{1.03, 1.3, 5.66, 2.1},
 			{1.21, 0.16, 2.1, 5.88}};
 
+
+	private static double[][] a_init = {{6.48, 1.04, 1.03, 1.21},
+			{1.04, 3.5, 1.3, 0.16},
+			{1.03, 1.3, 5.66, 2.1},
+			{1.21, 0.16, 2.1, 5.88}};
 
 	public strictfp static void main(String[] args) throws FileNotFoundException {
 		// Поток вывода для лога
@@ -119,6 +125,14 @@ public class L1 {
 		} while (acc > EPS);
 		out.close();
 
+		double[][] h_res = new double[a.length][a.length];
+		for (int i = 0; i < h.length; i++) {
+			for (int j = 0; j < h[0].length; j++) {
+				h_res[j][i] = h[i][j];
+			}
+		}
+		h = h_res;
+
 		// Выводим результаты пользователю
 		System.out.printf("Eigen values: \t Eigen vectors:%n");
 		for (int i = 0; i < a.length; i++) {
@@ -130,10 +144,13 @@ public class L1 {
 		}
 		System.out.printf("%n");
 
-		System.out.println(Arrays.toString(error(a, h, 0)));
-		System.out.println(Arrays.toString(error(a, h, 1)));
-		System.out.println(Arrays.toString(error(a, h, 2)));
-		System.out.println(Arrays.toString(error(a, h, 3)));
+		System.out.println(Arrays.toString(error(a, a_init, h, 0)));
+		System.out.println(Arrays.toString(error(a, a_init, h, 1)));
+		System.out.println(Arrays.toString(error(a, a_init, h, 2)));
+		System.out.println(Arrays.toString(error(a, a_init, h, 3)));
+
+
+//		Step.degree(a_init);
 	}
 
 	static double[][] multiply(double[][] a, double[][] b) {
@@ -167,21 +184,13 @@ public class L1 {
 		return sb.toString();
 	}
 
-	static double[] error(double[][] a, double[][] h, int k) {
-		double[][] h_res = new double[a.length][a.length];
-		for (int i = 0; i < h.length; i++) {
-			for (int j = 0; j < h[0].length; j++) {
-				h_res[i][j] = h[j][i];
-			}
-		}
-		h = h_res;
-
+	static double[] error(double[][] a, double[][] a_init, double[][] h, int k) {
 		double[] result = new double[a.length];
 		double[] v = new double[a.length];
 		for (int i = 0; i < h.length; i++) {
-			v[i] = h[i][k];
+			v[i] = h[k][i];
 		}
-		double[] av = mult1(a, v);
+		double[] av = mult(a_init, v);
 		double[] lv = new double[a.length];
 		for (int i = 0; i < a.length; i++) {
 			lv[i] = v[i] * a[k][k];
@@ -193,7 +202,7 @@ public class L1 {
 		return result;
 	}
 
-	public static double[] mult1(double[][] a, double[] b) {
+	public static double[] mult(double[][] a, double[] b) {
 		double s;
 		int n = a.length;
 		double[] result = new double[n];
