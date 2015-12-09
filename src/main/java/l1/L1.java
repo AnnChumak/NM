@@ -150,7 +150,8 @@ public class L1 {
 		System.out.println(Arrays.toString(error(a, a_init, h, 3)));
 
 
-//		Step.degree(a_init);
+		System.out.println();
+		Step.degree(a_init);
 	}
 
 	static double[][] multiply(double[][] a, double[][] b) {

@@ -10,11 +10,11 @@ public class Step {
 		double lamda = 0, newlamda = 0, eps = 0.0001;
 
 		for (int i = 0; i < a.length; i++) {
-			y[i][0] = 1;//Y0
+			y[i][0] = 1;
 		}
 
-		newY = mult(a, y); //Y1
-		lamda = newY[1][0] / y[1][0]; //ë1
+		newY = mult(a, y);
+		lamda = newY[1][0] / y[1][0];
 
 		for (int i = 0; i < a.length; i++) {
 			y[i][0] = newY[i][0]; //Y1
@@ -23,12 +23,12 @@ public class Step {
 
 		int z = 0;
 		do {
-			lamda = newlamda;//ë1
-			newY = mult(a, y);//Y2
-			newlamda = newY[1][0] / y[1][0];//ë2
+			lamda = newlamda;
+			newY = mult(a, y);
+			newlamda = newY[1][0] / y[1][0];
 			newY = norm(newY);
 			for (int i = 0; i < a.length; i++) {
-				y[i][0] = newY[i][0]; //Y1
+				y[i][0] = newY[i][0];
 			}
 
 		} while (Math.abs(newlamda - lamda) > eps);
@@ -87,8 +87,8 @@ public class Step {
 
 	public static double[][] mult(double[][] a, double[][] b) {
 		double s;
-		int n = a[0].length;
-		int m = b.length;
+		int n = a.length;
+		int m = b[0].length;
 		double[][] result = new double[n][m];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
