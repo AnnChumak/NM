@@ -81,8 +81,16 @@ public class Step {
 
 	}
 
-	private static double[][] norm(double[][] newY) {
-		return newY;
+	private static double[][] norm(double[][] X) {
+		double n = 0;
+		for (int i = 0; i < X.length; i++) {
+			n += Math.pow(X[i][0], 2.0);
+		}
+		n = 1 / Math.pow(n, 0.5);
+		for (int i = 0; i < X.length; i++) {
+			X[i][0] = n * X[i][0];
+		}
+		return X;
 	}
 
 	public static double[][] mult(double[][] a, double[][] b) {

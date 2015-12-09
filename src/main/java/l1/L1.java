@@ -63,10 +63,10 @@ public class L1 {
 					}
 				}
 			}
-			double phi = 1.0 / 2 * Math.atan((2 * a[posI][posJ]) / (a[posI][posI] - a[posJ][posJ]));
-			m[posI][posI] = Math.cos(phi);
+			double fi = 1.0 / 2 * Math.atan((2 * a[posI][posJ]) / (a[posI][posI] - a[posJ][posJ]));
+			m[posI][posI] = Math.cos(fi);
 			m[posJ][posJ] = m[posI][posI];
-			m[posJ][posI] = Math.sin(phi);
+			m[posJ][posI] = Math.sin(fi);
 			m[posI][posJ] = -m[posJ][posI];
 			r = m;
 
@@ -148,7 +148,6 @@ public class L1 {
 		System.out.println(Arrays.toString(error(a, a_init, h, 1)));
 		System.out.println(Arrays.toString(error(a, a_init, h, 2)));
 		System.out.println(Arrays.toString(error(a, a_init, h, 3)));
-
 
 		System.out.println();
 		Step.degree(a_init);
